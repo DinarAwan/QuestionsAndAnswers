@@ -49,4 +49,7 @@ class PostinganServiceImplement extends ServiceApi implements PostinganService{
       public function getPostinganWithKomentars($postinganId){
         return $this->mainRepository->getPostinganWithKomentars($postinganId);
     }
+    public function getUserPostingan($userId){
+        return $this->mainRepository->getUserPostingan($userId);
+    }
 }

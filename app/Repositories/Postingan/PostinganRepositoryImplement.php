@@ -56,4 +56,13 @@ public function getPostinganWithKomentars($postinganId){
         ])
         ->find($postinganId);
     }
+
+    public function getUserPostingan($userId){
+       
+    return $this->model
+        ->where('user_id', $userId)
+        ->with('user:id,name,email')
+        ->get();
+
+    }
 }

@@ -12,4 +12,5 @@ interface PostinganRepository extends Repository{
     public function updatePostingan($id, array $data);
     public function deletePostingan($id);
     public function getPostinganWithKomentars($postinganId);
+    public function getUserPostingan($userId);
 }

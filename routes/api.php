@@ -7,8 +7,10 @@ use App\Http\Controllers\PostinganController;
 
 
 Route::middleware(['auth:sanctum'])->group(function () {
+    Route::get('/user-postingan', [PostinganController::class, 'getUserByPostingan']);
+
     Route::get('/me', [AuthController::class, 'me']);
-    route::get('/logout', [AuthController::class, 'logout']);
+    route::post('/logout', [AuthController::class, 'logout']);
 
     Route::post('/postingan-create', [PostinganController::class, 'store']);
     Route::patch('/postingan-update/{id}', [PostinganController::class, 'update'])->middleware('PemilikPostingan');

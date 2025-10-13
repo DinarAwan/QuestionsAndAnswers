@@ -19,6 +19,7 @@ class PemilikPostingan
     {
         $userSaatIni = Auth::user();
         $postingan = Postingan::findOrFail($request->id);
+
         if($userSaatIni->id !== $postingan->user_id){
             return response()->json(['message' => 'Anda tidak memiliki izin untuk mengedit postingan ini.'], 403);
         }

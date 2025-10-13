@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Postingan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Services\Postingan\PostinganService;
@@ -83,6 +84,25 @@ class PostinganController extends Controller
             'data' => new ShowPostinganResource($hapusPostingan->loadMissing('user:id,name,email'))
         ]);
     }
+
+    public function getUserByPostingan()
+    {
+        $userId = Auth::id(); // ambil id user yang sedang login
+
+        $postingans = Postingan::with('user:id,name,email')
+        ->where('user_id', $userId)
+        ->get();
+
+    if ($postingans->isEmpty()) {
+        return response()->json([
+            'message' => 'Kamu belum memiliki postingan.'
+        ], 404);
+    }
+
+    return PostinganResource::collection($postingans);
+    }
+
+    
 
 
 }

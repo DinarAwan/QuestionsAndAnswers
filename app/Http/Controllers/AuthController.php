@@ -24,12 +24,39 @@ class AuthController extends Controller
             'email' => 'required|email',
             'password' => 'required|string|min:6',
         ]);
+        
         $user = User::where('email', $request->email)->first();
+        $token = $user->createToken('user login')->plainTextToken;
         if (!$user || !Auth::attempt($request->only('email', 'password'))) {
             return "Email Salah atau Password Salah";   
         }
+
+        return response()->json([
+            'token' => $token,
+            'user' => $user
+        ]);
         
         return $user->createToken('user login')->plainTextToken;
+
+
+        // $request->validate([
+        // 'email' => 'required|email',
+        // 'password' => 'required|string', // Validasi min:6 bisa ditambahkan jika perlu
+        // ]);
+
+        // // Auth::attempt sudah mencakup pengecekan email dan password
+        // if (!Auth::attempt($request->only('email', 'password'))) {
+        //     // Ini akan otomatis mengembalikan respons JSON error 422 dengan pesan
+        //     throw ValidationException::withMessages([
+        //         'email' => 'Email atau password yang Anda masukkan salah.',
+        //     ]);
+        // }
+
+        // // Jika berhasil, buat sesi baru
+        // $request->session()->regenerate();
+
+        // // Kembalikan data user yang login, BUKAN token
+        // return response()->json(Auth::user());
     }
 
     public function me(Request $request){

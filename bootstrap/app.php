@@ -1,5 +1,6 @@
 <?php
 
+use Fruitcake\Cors\HandleCors;
 use Illuminate\Foundation\Application;
 use App\Http\Middleware\PemilikKomentar;
 use App\Http\Middleware\PemilikPostingan;
@@ -14,11 +15,15 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
+        $middleware->append(\Illuminate\Http\Middleware\HandleCors::class);
         $middleware->alias([
             'PemilikPostingan' => PemilikPostingan::class,
             'PemilikKomentar' => PemilikKomentar::class,
+            
         ]);
     })
+
+
     ->withExceptions(function (Exceptions $exceptions): void {
         //
     })->create();

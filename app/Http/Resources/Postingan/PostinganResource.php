@@ -16,12 +16,15 @@ class PostinganResource extends JsonResource
     {
        // return parent::toArray($request);
         return [
+            'id' => $this->id,
             'judul' => $this->judul,
             'isi' => $this->isi,
             'gambar' => $this->gambar,
             'user' => $this->whenLoaded('user', function () {
             return [
                 'name' => $this->user->name,
+                'email' => $this->user->email,
+                'id' => $this->user->id,
             ];
         }), 
             
